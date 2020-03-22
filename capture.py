@@ -26,7 +26,7 @@ conn.close();
 
 # Setup
 sense = SenseHat()
-temp = sense.get_temperature()
+temp = sense.get_temperature() # TODO: Change to Arduino
 
 # Directory
 dir_name = './data/'
@@ -41,5 +41,5 @@ except FileExistsError:
 with open(filename, 'a+') as f:
 	writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 	if(f.tell() == 0):
-		writer.writerow(['temp'])
-	writer.writerow([temp])
+		writer.writerow(['temp']) # TODO: Change to Arduino
+	writer.writerow([temp]) # TODO: Change to Arduino
