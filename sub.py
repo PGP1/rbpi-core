@@ -8,13 +8,12 @@ topic = "test"
 broker_address="110.174.81.168"
 port = "1883"
 
-print("creating new instance")
+#initialise MQTT Client
 client = mqtt.Client("pi-subscriber")
 
 def on_connect(client, userdata, flags, rc):
     if rc==0:
         print("connection established, returned code=",rc)
-        client.subscribe(topic)
     else:
         print("connection error, returned code=",rc)
 
@@ -30,10 +29,10 @@ client.on_message = on_message
 client.on_log = on_log
 
 print("connecting to broker")
-#client.username_pw_set(user, password)
-#client.connect(broker_address)
+client.username_pw_set(user, password)
+client.connect(broker_address)
 
 print("subscribing to topic"," instructions/light")
 client.loop_start()
-client.subscribe("test")
+client.subscribe(topic)
 client.loop_forever()

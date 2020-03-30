@@ -12,6 +12,7 @@ main methods
 - subscribe()
 - publish ()
 '''
+
 broker_address = "110.174.81.168"
 port = 1883
 topic = "localgateway_to_awsiot"
@@ -26,9 +27,10 @@ def on_disconnect(client, userdata, rc):
     print("client disconnected OK")
         
 # create new instance
-client = mqtt.Client("client1")
+client = mqtt.Client("awsiot-client")
 client.on_publish = on_publish
 client.on_disconnect = on_disconnect
+
 # client.publish("sensor/water_level","LOW")
 
 # set broker address of raspberry pis
@@ -36,10 +38,10 @@ client.on_disconnect = on_disconnect
 client.connect(broker_address,port)
 # publish a message
 
-
 read_serial=ser.readline()
 s[0] = str(int (ser.readline(),16))
 
+#Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
 client.publish(topic, s[0])
 #client.publish(topic, "{\"key\": \"helloFromLocalGateway\"}")
 client.disconnect()
