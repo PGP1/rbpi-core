@@ -57,7 +57,7 @@ aws iot list-certificates
 #### Attach the policy to your certificate
 
 ``` 
-aws iot attach-principal-policy --policy-name bridge --principal arn:aws:iot:ap-southeast-2:624634462175:cert/817eef999aec23574c8433da8531a10c20a19cb5675e1359f084693ea482f81c
+aws iot attach-principal-policy --policy-name bridge --principal <arn>
 ```
 
 #### Add read permissions to private key and client cert
