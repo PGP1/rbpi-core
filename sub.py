@@ -30,5 +30,4 @@ client.on_log = on_log
 
 #client.username_pw_set(user, password)
 client.connect(broker_address)
-
 client.loop_forever()

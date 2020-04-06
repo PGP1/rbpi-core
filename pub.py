@@ -43,5 +43,4 @@ s[0] = str(int (ser.readline(),16))
 
 #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
 client.publish(topic, s[0])
-#client.publish(topic, "{\"key\": \"helloFromLocalGateway\"}")
 client.disconnect()
