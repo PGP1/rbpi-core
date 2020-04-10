@@ -25,21 +25,21 @@ conn.commit();
 conn.close();
 
 # Setup
-sense = SenseHat()
-temp = sense.get_temperature() # TODO: Change to Arduino
+#sense = SenseHat()
+#temp = sense.get_temperature() # TODO: Change to Arduino
 
 # Directory
-dir_name = './data/'
-filename = dir_name + ID + "-" + datetime.now().strftime("%d-%m-%Y-%H-%M-%S") + '.csv'
+#dir_name = './data/'
+#filename = dir_name + ID + "-" + datetime.now().strftime("%d-%m-%Y-%H-%M-%S") + '.csv'
 
 # Initialize
-try:
-	os.makedirs(dir_name)
-except FileExistsError:
-	pass
+#try:
+#	os.makedirs(dir_name)
+#except FileExistsError:
+#	pass
 
-with open(filename, 'a+') as f:
-	writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-	if(f.tell() == 0):
-		writer.writerow(['temp']) # TODO: Change to Arduino
-	writer.writerow([temp]) # TODO: Change to Arduino
+#with open(filename, 'a+') as f:
+#	writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+#	if(f.tell() == 0):
+#		writer.writerow(['temp']) # TODO: Change to Arduino
+#	writer.writerow([temp]) # TODO: Change to Arduino
