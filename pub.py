@@ -39,7 +39,7 @@ client.connect(broker_address,port)
 # publish a message
 
 read_serial=ser.readline()
-s[0] = str(int (ser.readline(),16))
+s[0] = ser.readline()
 
 #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
 client.publish(topic, s[0])
