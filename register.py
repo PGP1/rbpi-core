@@ -6,26 +6,46 @@ import json
 import uuid
 import time
 import iddevice
+import paho.mqtt.client as mqtt
+import serial
 
 def register():
+
+    '''
+    main methods
+    - connect()
+    - disconnect()
+    - subscribe()
+    - publish ()
+    '''
+
+    broker_address = "110.174.81.168"
+    port = 1883
+    topic = "localgateway_to_awsiot"
     ID = iddevice.getID()
-    # URL of the endpoint
-    url = "https://yeotf6yzv3.execute-api.ap-southeast-2.amazonaws.com/default/RegisterDevice"
-    
-    # Payload, the id of the registered device
-    payload = {'id': ID}
-    
-    headers = {
-              'x-api-key': 'x2zEYge4bm4e40bYdQrlK3jc4h4c9OEh4muioDtf',
-              'Content-Type': 'application/json'
-              }
-    
-    while True:
-        try:
-            response = requests.request("POST", url, headers=headers, data = json.dumps(payload))
-        except requests.ConnectionError as e:
-            print("An exception occurred: ",  e)
-            continue
-        break
+
+    def on_publish(client, userdata, result):
+        print("data published \n")
+        pass
+
+    def on_disconnect(client, userdata, rc):
+        logging.debug("disconnected, rc=",str(rc))
+        client.loop_stop()
+        print("client disconnected OK")
+            
+    # create new instance
+    client = mqtt.Client("awsiot-client")
+    client.on_publish = on_publish
+    client.on_disconnect = on_disconnect
+
+
+    # set broker address of raspberry pis
+    # connect to pi
+    client.connect(broker_address,port)
+
+    #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
+    client.publish(topic, ID)
+    client.disconnect()
+
 
 register()
