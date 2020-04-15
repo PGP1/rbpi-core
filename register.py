@@ -21,11 +21,11 @@ def register():
 
     broker_address = "110.174.81.168"
     port = 1883
-    topic = "localgateway_to_awsiot"
+    topic = "register_device"
     ID = iddevice.getID()
 
     def on_publish(client, userdata, result):
-        print("data published \n")
+        print("registered device \n")
         pass
 
     def on_disconnect(client, userdata, rc):
