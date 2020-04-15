@@ -23,6 +23,7 @@ def register():
     port = 1883
     topic = "register_device"
     ID = iddevice.getID()
+    payload = {'id': ID}
 
     def on_publish(client, userdata, result):
         print("registered device \n")
@@ -33,8 +34,8 @@ def register():
         client.loop_stop()
         print("client disconnected OK")
             
-    # create new instance
-    client = mqtt.Client("awsiot-client")
+    # Create new instance
+    client = mqtt.Client("awsiot-client-register")
     client.on_publish = on_publish
     client.on_disconnect = on_disconnect
 
@@ -43,8 +44,8 @@ def register():
     # connect to pi
     client.connect(broker_address,port)
 
-    #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
-    client.publish(topic, ID)
+    #Publish to topic for AWS IoT to pickup
+    client.publish(topic, json.dumps(payload))
     client.disconnect()
 
 
