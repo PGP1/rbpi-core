@@ -60,3 +60,5 @@ def publish(pub):
         payload = {"message": "On"}
         client.publish(topic, json.dumps(payload))
         client.connect(broker_address, port)
+
+publish(pub)
