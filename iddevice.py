@@ -4,7 +4,6 @@ import requests
 import sqlite3
 import json
 import uuid
-import time
 
 def getID():
     conn = sqlite3.connect('rbpi-rmit-iot.db')

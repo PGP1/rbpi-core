@@ -53,5 +53,5 @@ class Publisher:
 
             topic = "both_directions"
             payload = {"message": "On"}
-            client.publish(topic, json.dumps(payload))
+            client.publish(topic, json.dumps(json.dumps(payload)))
             client.disconnect()

@@ -4,7 +4,6 @@ import requests
 import sqlite3
 import json
 import uuid
-import time
 import iddevice
 import paho.mqtt.client as mqtt
 import serial
