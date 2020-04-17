@@ -27,11 +27,9 @@ class Publisher:
         client.loop_stop()
         print("client disconnected OK")
 
-    def publish(self, pub):
+    def publish(self, pub, payload):
         if pub == 'arduino':
-            # arduino setup
-            # ser = serial.Serial('/dev/ttyACM0', 9600)
-            # s = [0]
+        # setting topic to publish to
             topic = "localgateway_to_awsiot"
 
         # create new instance
@@ -49,16 +47,16 @@ class Publisher:
 
             #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
             # client.publish(topic, s[0])
-            client.publish(topic, 0)
+            client.publish(topic, payload)
             client.disconnect()
         elif pub == 'status':
             client = mqtt.Client("awsiot-client-status")
-            client.on_publish = on_publish
-            client.on_disconnect = on_disconnect
+            client.on_publish = self.on_publish
+            client.on_disconnect = self.on_disconnect
 
-            client.connect(broker_address, port)
+            client.connect(self.broker_address, self.port)
 
             topic = "both_directions"
             payload = {"message": "On"}
             client.publish(topic, json.dumps(payload))
-            client.connect(broker_address, port)
+            client.disconnect()
