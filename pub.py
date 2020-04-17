@@ -11,9 +11,10 @@ main methods
 '''
 
 class Publisher:
-    pub = " "
-    def __init__(self, publisher):
-        self.pub = publisher
+    pub = ""
+    broker_address = ""
+    port = ""
+    def __init__(self):
         self.broker_address = "110.174.81.168"
         self.port = 1883
 
@@ -60,5 +61,3 @@ class Publisher:
             payload = {"message": "On"}
             client.publish(topic, json.dumps(payload))
             client.connect(broker_address, port)
-
-publish(pub)
