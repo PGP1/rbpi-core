@@ -8,5 +8,5 @@ s = ""
 
 def push_data():
         publisher = Publisher()
-        publisher.publish('pub')
+        publisher.publish('arduino')
         return 0
