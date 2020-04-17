@@ -9,8 +9,9 @@ main methods
 - subscribe()
 - publish ()
 '''
-class Publisher:
 
+class Publisher:
+    pub = " "
     def __init__(self, publisher):
         self.pub = publisher
         self.broker_address = "110.174.81.168"
@@ -60,4 +61,4 @@ class Publisher:
             client.publish(topic, json.dumps(payload))
             client.connect(broker_address, port)
 
-    publish(pub)
+publish(pub)
