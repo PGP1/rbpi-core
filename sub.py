@@ -3,7 +3,8 @@ import time as time
 
 user = "user"
 password = "password"
-topic = "awsiot_to_localgateway"
+topic_1 = "awsiot_to_localgateway"
+topic_2 = "both_directions"
 broker_address="110.174.81.168"
 port = "1883"
 
@@ -13,7 +14,8 @@ client = mqtt.Client("pi-subscriber")
 def on_connect(client, userdata, flags, rc):
     if rc==0:
         print("connection established, returned code=",rc)
-        client.subscribe(topic)
+        client.subscribe(topic_1)
+        client.subscribe(topic_2)
     else:
         print("connection error, returned code=",rc)
 
@@ -31,3 +33,4 @@ client.on_log = on_log
 #client.username_pw_set(user, password)
 client.connect(broker_address)
 client.loop_forever()
+
