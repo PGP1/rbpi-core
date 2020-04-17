@@ -30,8 +30,8 @@ class Publisher:
     def publish(self, pub):
         if pub == 'arduino':
             # arduino setup
-            ser = serial.Serial('/dev/ttyACM0', 9600)
-            s = [0]
+            # ser = serial.Serial('/dev/ttyACM0', 9600)
+            # s = [0]
             topic = "localgateway_to_awsiot"
 
         # create new instance
