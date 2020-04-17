@@ -41,12 +41,7 @@ class Publisher:
             # connect to pi
             client.connect(self.broker_address, self.port)
 
-            # publish a message
-            # read_serial=ser.readline()
-            # s[0] = ser.readline()
-
             #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
-            # client.publish(topic, s[0])
             client.publish(topic, payload)
             client.disconnect()
         elif pub == 'status':
