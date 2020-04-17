@@ -9,16 +9,13 @@ main methods
 - subscribe()
 - publish ()
 '''
-
-broker_address = "110.174.81.168"
-port = 1883
-pub =" " 
-
 class Publisher:
 
     def __init__(self, publisher):
         self.pub = publisher
-        print(pub)
+        self.broker_address = "110.174.81.168"
+        self.port = 1883
+        self.pub =" " 
 
     def on_publish(self, client, userdata, result):
         print("data published \n")
