@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import time as time
+import json
 
 user = "user"
 password = "password"
@@ -21,6 +22,9 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
+    if msg.topic == "both_directions":
+        payload = {"message": "On"}
+        client.publish(topic_2, json.dumps(payload))
 
 def on_log(client, userdata, level, buf):
     print("log ", buf)
