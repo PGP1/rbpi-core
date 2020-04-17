@@ -15,7 +15,6 @@ class Publisher:
         self.pub = publisher
         self.broker_address = "110.174.81.168"
         self.port = 1883
-        self.pub =" " 
 
     def on_publish(self, client, userdata, result):
         print("data published \n")
