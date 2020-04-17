@@ -42,7 +42,7 @@ class Publisher:
             client.connect(self.broker_address, self.port)
 
             #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
-            client.publish(topic, jsons.dump(payload))
+            client.publish(topic, json.dumps(payload))
             client.disconnect()
         elif pub == 'status':
             client = mqtt.Client("awsiot-client-status")
