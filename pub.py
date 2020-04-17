@@ -48,15 +48,14 @@ def publish(pub):
         #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
         client.publish(topic, s[0])
         client.disconnect()
-
     elif pub == 'status':
-	client = mqtt.Client("awsiot-client-status")
-	client.on_publish = on_publish
-	client.on_disconnect = on_disconnect
+        client = mqtt.Client("awsiot-client-status")
+        client.on_publish = on_publish
+        client.on_disconnect = on_disconnect
 
-	client.connect(broker_address, port)
+        client.connect(broker_address, port)
 
-	topic = "both_directions"
-	payload = {"message": "On"}
-	client.publish(topic, json.dumps(payload))
-	client.connect(broker_address, port)
+        topic = "both_directions"
+        payload = {"message": "On"}
+        client.publish(topic, json.dumps(payload))
+        client.connect(broker_address, port)
