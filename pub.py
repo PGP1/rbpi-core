@@ -12,9 +12,10 @@ main methods
 
 broker_address = "110.174.81.168"
 port = 1883
+pub =" " 
 
-def __init__(publisher):
-    pub = publisher
+def __init__(self, publisher):
+    self.pub = publisher
 
 def on_publish(client, userdata, result):
     print("data published \n")
