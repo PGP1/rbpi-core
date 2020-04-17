@@ -36,19 +36,20 @@ class Publisher:
 
         # create new instance
             client = mqtt.Client("awsiot-client")
-            client.on_publish = on_publish
-            client.on_disconnect = on_disconnect
+            client.on_publish = self.on_publish
+            client.on_disconnect = self.on_disconnect
 
             # set broker address of raspberry pis
             # connect to pi
-            client.connect(broker_address,port)
+            client.connect(self.broker_address, self.port)
 
             # publish a message
-            read_serial=ser.readline()
-            s[0] = ser.readline()
+            # read_serial=ser.readline()
+            # s[0] = ser.readline()
 
             #Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
-            client.publish(topic, s[0])
+            # client.publish(topic, s[0])
+            client.publish(topic, 0)
             client.disconnect()
         elif pub == 'status':
             client = mqtt.Client("awsiot-client-status")
