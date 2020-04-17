@@ -16,6 +16,7 @@ pub =" "
 
 def __init__(self, publisher):
     self.pub = publisher
+    print(pub)
 
 def on_publish(client, userdata, result):
     print("data published \n")
