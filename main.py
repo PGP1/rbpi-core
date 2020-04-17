@@ -1,4 +1,5 @@
 import arduinoconnect
+import time 
 
 def main():
     arduino = arduinoconnect
@@ -6,5 +7,6 @@ def main():
 
 if __name__=='__main__':
     while True:
+        time.sleep(1000)
         main()
 
