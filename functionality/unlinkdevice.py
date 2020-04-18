@@ -4,6 +4,10 @@ import register
 import json
 import iddevice
 
+'''
+Unlink Device, by publishing ID to Cloud, and it will find in the dynamoDB database and update by removing it
+'''
+
 broker_address = "110.174.81.168"
 port = 1883
 topic = "unlink-device"

@@ -5,6 +5,11 @@ import sqlite3
 import json
 import uuid
 
+'''
+This script performs the task of obtaining the ID of the device via the local database
+1) If the ID already exists, pulled from database
+2) If not, generate the ID
+'''
 def getID():
     conn = sqlite3.connect('rbpi-rmit-iot.db')
     c = conn.cursor()

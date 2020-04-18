@@ -1,6 +1,10 @@
 import arduinoconnect
 import time 
 
+'''
+Calls Arduino Connect, and then push data to cloud, but publishing
+'''
+
 def main():
     arduino = arduinoconnect
     arduino.push_data()

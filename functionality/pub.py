@@ -29,10 +29,10 @@ class Publisher:
 
     def publish(self, pub, payload):
         if pub == 'arduino':
-        # setting topic to publish to
+            # setting topic to publish to
             topic = "localgateway_to_awsiot"
 
-        # create new instance
+            # create new instance
             client = mqtt.Client("awsiot-client")
             client.on_publish = self.on_publish
             client.on_disconnect = self.on_disconnect
@@ -45,6 +45,7 @@ class Publisher:
             client.publish(topic, json.dumps(payload))
             client.disconnect()
         elif pub == 'status':
+            #Publish back to the AWSIoT to respond for request for online status
             client = mqtt.Client("awsiot-client-status")
             client.on_publish = self.on_publish
             client.on_disconnect = self.on_disconnect
