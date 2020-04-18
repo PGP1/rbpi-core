@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
-import serial
 import json
+import logging
 
 '''
 main methods

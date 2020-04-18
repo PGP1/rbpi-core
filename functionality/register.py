@@ -2,11 +2,11 @@
 import json
 import requests
 import sqlite3
-import json
 import uuid
 import iddevice
 import paho.mqtt.client as mqtt
-import serial
+import logging
+
 
 def register():
 
@@ -29,7 +29,7 @@ def register():
         pass
 
     def on_disconnect(client, userdata, rc):
-        logging.debug("disconnected, rc=",str(rc))
+        logging.debug("disconnected, rc=", str(rc))
         client.loop_stop()
         print("client disconnected OK")
             
@@ -38,12 +38,11 @@ def register():
     client.on_publish = on_publish
     client.on_disconnect = on_disconnect
 
-
     # set broker address of raspberry pis
     # connect to pi
-    client.connect(broker_address,port)
+    client.connect(broker_address, port)
 
-    #Publish to topic for AWS IoT to pickup
+    # publish to topic for AWS IoT to pickup
     client.publish(topic, json.dumps(payload))
     client.disconnect()
 
