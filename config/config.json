@@ -1,0 +1,8 @@
+{
+    "configuration": {
+        "topic": {
+            "awsiot_to_localgateway": "awsiot_to_localgateway",
+            "localgateway_to_awsiot": "localgateway_to_awsiot"
+        }
+    }
+}

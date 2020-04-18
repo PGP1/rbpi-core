@@ -1,8 +1,6 @@
 import paho.mqtt.client as mqtt
-import time as time
 import json
 import os
-from dotenv import load_dotenv
 
 BROKER_IP = os.getenv("BROKER_IP")
 BROKER_PORT = os.getenv("BROKER_PORT")
@@ -46,4 +44,3 @@ client.on_log = on_log
 # client.username_pw_set(user, password)
 client.connect(broker_address)
 client.loop_forever()
-

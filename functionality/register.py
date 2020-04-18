@@ -1,20 +1,15 @@
 #!/usr/bin/python2
 import json
-import requests
-import sqlite3
-import uuid
 import iddevice
 import paho.mqtt.client as mqtt
 import logging
 import os
-from dotenv import load_dotenv
 
 BROKER_IP = os.getenv("BROKER_IP")
 BROKER_PORT = os.getenv("BROKER_PORT")
 
 
 def register():
-
     '''
     main methods
     - connect()
@@ -37,7 +32,7 @@ def register():
         logging.debug("disconnected, rc=", str(rc))
         client.loop_stop()
         print("client disconnected OK")
-            
+
     # Create new instance
     client = mqtt.Client("awsiot-client-register")
     client.on_publish = on_publish
