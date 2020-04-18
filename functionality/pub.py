@@ -1,6 +1,11 @@
 import paho.mqtt.client as mqtt
 import json
 import logging
+import os
+from dotenv import load_dotenv
+
+BROKER_IP = os.getenv("BROKER_IP")
+BROKER_PORT = os.getenv("BROKER_PORT")
 
 '''
 main methods
@@ -15,8 +20,8 @@ class Publisher:
     broker_address = ""
     port = ""
     def __init__(self):
-        self.broker_address = "110.174.81.168"
-        self.port = 1883
+        self.broker_address = BROKER_IP
+        self.port = BROKER_PORT
 
     def on_publish(self, client, userdata, result):
         print("data published \n")

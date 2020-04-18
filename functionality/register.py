@@ -6,6 +6,11 @@ import uuid
 import iddevice
 import paho.mqtt.client as mqtt
 import logging
+import os
+from dotenv import load_dotenv
+
+BROKER_IP = os.getenv("BROKER_IP")
+BROKER_PORT = os.getenv("BROKER_PORT")
 
 
 def register():
@@ -18,8 +23,8 @@ def register():
     - publish ()
     '''
 
-    broker_address = "110.174.81.168"
-    port = 1883
+    broker_address = BROKER_IP
+    port = BROKER_PORT
     topic = "register_device"
     ID = iddevice.getID()
     payload = {'id': ID}

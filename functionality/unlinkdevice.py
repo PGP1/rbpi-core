@@ -1,15 +1,20 @@
 import paho.mqtt.client as mqtt
-import serial
 import register
 import json
 import iddevice
+import logging
+import os
+from dotenv import load_dotenv
+
+BROKER_IP = os.getenv("BROKER_IP")
+BROKER_PORT = os.getenv("BROKER_PORT")
 
 '''
 Unlink Device, by publishing ID to Cloud, and it will find in the dynamoDB database and update by removing it
 '''
 
-broker_address = "110.174.81.168"
-port = 1883
+broker_address = BROKER_IP
+port = BROKER_PORT
 topic = "unlink-device"
 
 def on_publish(client, userdata, result):
