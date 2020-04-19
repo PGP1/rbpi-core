@@ -1,5 +1,5 @@
-import arduinoconnect
-
+import functionality.arduinoconnect as arduino
+from mqtt.sub import Subscriber
 '''
 Calls Arduino Connect, and then push data to cloud, but publishing
 '''
@@ -7,8 +7,11 @@ Calls Arduino Connect, and then push data to cloud, but publishing
 
 def main():
     # Begin subscribing
+    subscriber = Subscriber()
+    subscriber.subscribe()
+
     # Begin publishing data
-    arduino = arduinoconnect
+    arduino = arduino
     arduino.push_data()
 
 

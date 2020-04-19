@@ -2,7 +2,8 @@ import paho.mqtt.client as mqtt
 import json
 import logging
 import os
-import utility
+import utility.loadconfig as loadconfig
+import utility.iddevice as iddevice
 
 BROKER_IP = os.getenv("BROKER_IP")
 BROKER_PORT = os.getenv("BROKER_PORT")
@@ -37,7 +38,9 @@ class Publisher:
     def publish(self, pub, payload):
         if pub == 'arduino':
             # setting topic to publish to
-            topic = utility.loadconfig.load_config().topic['toawsiot/b1']
+            topic = loadconfig.load_config().topic['toawsiot/b1']
+            id = iddevice.get_id()
+            payload = {'device': {'pi-id' : id}, 'message': payload}
 
             # create new instance
             client = mqtt.Client("awsiot-client")
@@ -48,7 +51,7 @@ class Publisher:
             # connect to pi
             client.connect(self.broker_address, self.port)
 
-            # Publish to topic 'localgateway_to_awsiot' for AWS IoT to pickup
+            # Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
             client.publish(topic, json.dumps(payload))
             client.disconnect()
         elif pub == 'status':
@@ -60,7 +63,8 @@ class Publisher:
 
             client.connect(self.broker_address, self.port)
 
-            topic = self.load_config().topic['toawsiot/b1']
-            payload = {"message": "On"}
+            topic = loadconfig.load_config().topic['toawsiot/b1']
+            id = iddevice.get_id()
+            payload = {'device': {'pi-id' : id}, 'message': 'on'}
             client.publish(topic, json.dumps(json.dumps(payload)))
             client.disconnect()
