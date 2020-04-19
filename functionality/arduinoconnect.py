@@ -1,5 +1,5 @@
 import serial
-from pub import Publisher
+from .pub import Publisher
 
 # Established arduino connection
 ser = serial.Serial('/dev/ttyACM0', 9600)

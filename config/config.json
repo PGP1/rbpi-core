@@ -1,8 +1,10 @@
 {
-    "configuration": {
-        "topic": {
-            "awsiot_to_localgateway": "awsiot_to_localgateway",
-            "localgateway_to_awsiot": "localgateway_to_awsiot"
-        }
+    "topic": {
+        "toawsiot/b1": "awsiot_to_localgateway/b1",
+        "fromawsiot/b1": "localgateway_to_awsiot/b1",
+        "register": "register_device",
+        "unlink": "unlink_device",
+        "statusrequest/b1": "status_request/b1",
+        "statusresponse/b1": "status_response/b1"
     }
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 import json
-import iddevice
+import utility
 import paho.mqtt.client as mqtt
 import logging
 import os
@@ -20,8 +20,8 @@ def register():
 
     broker_address = BROKER_IP
     port = BROKER_PORT
-    topic = "register_device"
-    ID = iddevice.getID()
+    topic = utility.loadconfig.load_config().topic['register_device/b1']
+    ID = utility.iddevice.get_id()
     payload = {'id': ID}
 
     def on_publish(client, userdata, result):
@@ -34,7 +34,7 @@ def register():
         print("client disconnected OK")
 
     # Create new instance
-    client = mqtt.Client("awsiot-client-register")
+    client = mqtt.Client("awsiot-client")
     client.on_publish = on_publish
     client.on_disconnect = on_disconnect
 

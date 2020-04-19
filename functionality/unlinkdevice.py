@@ -15,7 +15,7 @@ and update by removing it
 
 broker_address = BROKER_IP
 port = BROKER_PORT
-topic = "unlink-device"
+topic = "unlink_device"
 
 
 def on_publish(client, userdata, result):
@@ -39,6 +39,7 @@ client.connect(broker_address, port)
 
 # getID
 id = {'id': iddevice.getID()}
+
 # Publish to topic 'unlink' for AWS IoT to pickup
 client.publish(topic, json.dumps(id))
 client.disconnect()

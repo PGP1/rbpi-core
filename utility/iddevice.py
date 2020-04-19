@@ -1,4 +1,3 @@
-#!/usr/bin/python2
 import sqlite3
 import uuid
 
@@ -10,8 +9,8 @@ via the local database
 '''
 
 
-def getID():
-    conn = sqlite3.connect('rbpi-rmit-iot.db')
+def get_id():
+    conn = sqlite3.connect('../data/rbpi-rmit-iot.db')
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS info (id TEXT PRIMARY KEY)")
 
@@ -21,12 +20,11 @@ def getID():
 
     if(FETCH_ID is None):
         ID = str(uuid.uuid4()).replace('-', '')
-        print('initialise' + ID)
+        print('initialise ' + ID)
         c.execute("INSERT INTO info (id) VALUES (?)", [ID])
     else:
         ID = FETCH_ID
 
     conn.commit()
     conn.close()
-
     return ID

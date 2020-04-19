@@ -2,12 +2,13 @@ import paho.mqtt.client as mqtt
 import json
 import logging
 import os
+import utility
 
 BROKER_IP = os.getenv("BROKER_IP")
 BROKER_PORT = os.getenv("BROKER_PORT")
 
 '''
-main methods
+methods
 - connect()
 - disconnect()
 - subscribe()
@@ -36,7 +37,7 @@ class Publisher:
     def publish(self, pub, payload):
         if pub == 'arduino':
             # setting topic to publish to
-            topic = "localgateway_to_awsiot"
+            topic = utility.loadconfig.load_config().topic['toawsiot/b1']
 
             # create new instance
             client = mqtt.Client("awsiot-client")
@@ -59,7 +60,7 @@ class Publisher:
 
             client.connect(self.broker_address, self.port)
 
-            topic = "both_directions"
+            topic = self.load_config().topic['toawsiot/b1']
             payload = {"message": "On"}
             client.publish(topic, json.dumps(json.dumps(payload)))
             client.disconnect()
