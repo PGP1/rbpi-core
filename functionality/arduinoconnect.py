@@ -1,4 +1,4 @@
-import serial
+# import serial
 from mqtt.pub import Publisher
 
 # Established arduino connection
