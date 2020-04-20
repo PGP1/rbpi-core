@@ -50,6 +50,3 @@ def register():
     # publish to topic for AWS IoT to pickup
     client.publish(topic, json.dumps(payload))
     client.disconnect()
-
-
-register()
