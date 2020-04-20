@@ -1,14 +1,18 @@
+
 import paho.mqtt.client as mqtt
 import json
 import os
 import utility.loadconfig as loadconfig
+from dotenv import load_dotenv
+env_path = './.env'
+load_dotenv(dotenv_path=env_path)
 
 
 class Subscriber:
 
     def __init__(self):
-        self.topic_1 = loadconfig.load_config().topic['toawsiot/b1']
-        self.topic_2 = loadconfig.load_config().topic['status_request/b1']
+        self.topic_1 = loadconfig.load_config()['topic']['fromawsiot/b1']
+        self.topic_2 = loadconfig.load_config()['topic']['statusresponse/b1']
         self.BROKER_IP = os.getenv("BROKER_IP")
         self.BROKER_PORT = os.getenv("BROKER_PORT")
 
@@ -22,7 +26,7 @@ class Subscriber:
 
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
-        if msg.topic == "both_directions":
+        if msg.topic == "status_request/b1":
             payload = {"message": "On"}
             client.publish(self.topic_2, json.dumps(payload))
 
@@ -31,6 +35,7 @@ class Subscriber:
 
     def subscribe(self):
         broker_address = self.BROKER_IP
+        print(broker_address)
         # initialise MQTT Client
         client = mqtt.Client("pi-subscriber")
 

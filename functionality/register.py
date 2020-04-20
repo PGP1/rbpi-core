@@ -4,6 +4,10 @@ import utility
 import paho.mqtt.client as mqtt
 import logging
 import os
+from dotenv import load_dotenv
+from pathlib import Path  # python3 only
+env_path = './.env'
+load_dotenv(dotenv_path=env_path)
 
 BROKER_IP = os.getenv("BROKER_IP")
 BROKER_PORT = os.getenv("BROKER_PORT")
@@ -19,8 +23,9 @@ def register():
     '''
 
     broker_address = BROKER_IP
-    port = BROKER_PORT
-    topic = utility.loadconfig.load_config().topic['register_device/b1']
+    port = int(BROKER_PORT)
+    print(port)
+    topic = utility.loadconfig.load_config()['topic']['register']
     ID = utility.iddevice.get_id()
     payload = {'id': ID}
 

@@ -6,12 +6,7 @@ Calls Arduino Connect, and then push data to cloud, but publishing
 
 
 def main():
-    # Begin subscribing
-    subscriber = Subscriber()
-    subscriber.subscribe()
-
     # Begin publishing data
-    arduino = arduino
     arduino.push_data()
 
 

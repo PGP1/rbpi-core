@@ -10,7 +10,7 @@ via the local database
 
 
 def get_id():
-    conn = sqlite3.connect('../data/rbpi-rmit-iot.db')
+    conn = sqlite3.connect('../RBPICore/data/rbpi-rmit-iot.db')
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS info (id TEXT PRIMARY KEY)")
 
@@ -28,3 +28,5 @@ def get_id():
     conn.commit()
     conn.close()
     return ID
+
+print(get_id())

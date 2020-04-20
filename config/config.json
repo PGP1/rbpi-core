@@ -1,7 +1,7 @@
 {
     "topic": {
-        "toawsiot/b1": "awsiot_to_localgateway/b1",
-        "fromawsiot/b1": "localgateway_to_awsiot/b1",
+        "toawsiot/b1": "localgateway_to_awsiot/b1",
+        "fromawsiot/b1": "awsiot_to_localgateway/b1",
         "register": "register_device",
         "unlink": "unlink_device",
         "statusrequest/b1": "status_request/b1",

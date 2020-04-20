@@ -2,8 +2,11 @@ import paho.mqtt.client as mqtt
 import json
 import logging
 import os
-import utility.loadconfig as loadconfig
-import utility.iddevice as iddevice
+import utility
+from dotenv import load_dotenv
+load_dotenv()
+env_path = './.env'
+load_dotenv(dotenv_path=env_path)
 
 BROKER_IP = os.getenv("BROKER_IP")
 BROKER_PORT = os.getenv("BROKER_PORT")
@@ -23,8 +26,8 @@ class Publisher:
     port = ""
 
     def __init__(self):
-        self.broker_address = BROKER_IP
-        self.port = BROKER_PORT
+        self.broker_address = str(BROKER_IP)
+        self.port = int(BROKER_PORT)
 
     def on_publish(self, client, userdata, result):
         print("data published \n")
@@ -38,8 +41,8 @@ class Publisher:
     def publish(self, pub, payload):
         if pub == 'arduino':
             # setting topic to publish to
-            topic = loadconfig.load_config().topic['toawsiot/b1']
-            id = iddevice.get_id()
+            topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']
+            id = utility.iddevice.get_id()
             payload = {'device': {'pi-id' : id}, 'message': payload}
 
             # create new instance
@@ -63,7 +66,7 @@ class Publisher:
 
             client.connect(self.broker_address, self.port)
 
-            topic = loadconfig.load_config().topic['toawsiot/b1']
+            topic = loadconfig.load_config()['topic']['toawsiot/b1']
             id = iddevice.get_id()
             payload = {'device': {'pi-id' : id}, 'message': 'on'}
             client.publish(topic, json.dumps(json.dumps(payload)))
