@@ -32,7 +32,7 @@ sudo apt-get install mosquitto && sudo apt-get instal mosquitto-clients
 #### Configure the CLI with your region, leave access/private keys blank
 
 ``` 
-aws configure
+sudo aws configure
 ```
 
 ##### Create an IAM policy for the bridge
