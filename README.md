@@ -67,21 +67,9 @@ sudo chmod 644 cert.crt
 
 #### Create your rootCA.pem  
 
-Obtain the VeriSign Class 3 Public Primary Certification Authority - G5 root certificate            
-
-Because the link is dead, to be able to sudo wget, I had to find it online for the rootca key
-
-https://knowledge.broadcom.com/external/article?legacyId=info3563              
-
-**Resolution:**                        
-
-Below is the SHA-1 Root CA for all SSL and Code Signing products enrolled  after October 10, 2010. This is also the SHA-2 Root CA for all VIP and  mPKI auth and non-auth SSL connections.
-
-**Issued to**: **VeriSign Class 3 Public Primary Certification Authority - G5
- Issued by**: VeriSign Class 3 Public Primary Certification Authority - G5
- **Valid from**: 11/7/2006 to 7/16/2036
- **Serial Number**: ‎18 da d1 9e 26 7d e8 bb 4a 21 58 cd cc 6b 3b 4a
-  
+```
+sudo touch rootCA.pem
+```
 
 1. Copy all of the highlighted text below, including `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`
 2. Paste the copied contents into a plain text editor such as Notepad or Vi. Do not use a rich-text editor, such as Word.
@@ -94,6 +82,11 @@ Below is the SHA-1 Root CA for all SSL and Code Signing products enrolled  after
 Save as rootCA.pem in the same directory as above certificated
 
 #### Create the configuration file
+
+```
+#Create the configuration file
+sudo nano /etc/mosquitto/conf.d/bridge.conf
+```
 
 To find your AWS endpoint, enter aws iot describe-endpoint
 
