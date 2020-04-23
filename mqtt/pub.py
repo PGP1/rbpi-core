@@ -44,7 +44,7 @@ class Publisher:
             # setting topic to publish to
             topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']
             id = utility.iddevice.get_id()
-            payload = {'device': {'pi-id' : id}, 'message': arduinopayload}
+            payload = {'broker-device': {'pi-id' : id}, 'message': arduinopayload}
 
             # create new instance
             client = mqtt.Client("awsiot-client")

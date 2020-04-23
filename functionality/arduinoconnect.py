@@ -7,7 +7,7 @@ from mqtt.pub import Publisher
 
 
 def push_data():
-    testpayload={'device': 'arduino-id',
+    testpayload={'sensor-device': 'arduino-id',
     'time': '20-18-04T11:24:36Z',
     'data': {
         'temp': '30',
