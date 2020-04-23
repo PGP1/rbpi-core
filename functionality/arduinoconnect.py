@@ -7,5 +7,14 @@ from mqtt.pub import Publisher
 
 
 def push_data():
+    testpayload={'device': 'arduino-id',
+    'time': '20-18-04T11:24:36Z',
+    'data': {
+        'temp': '30',
+        'humidity': '30',
+        'water': '330',
+        'ph': '7',
+        'ldr': '485',
+    }}
     publisher = Publisher()
-    publisher.publish('arduino', 'test')
+    publisher.publish('arduino', testpayload)
