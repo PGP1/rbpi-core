@@ -11,16 +11,17 @@ load_dotenv(dotenv_path=env_path)
 class Subscriber:
 
     def __init__(self):
-        self.topic_1 = loadconfig.load_config()['topic']['fromawsiot/b1']
-        self.topic_2 = loadconfig.load_config()['topic']['statusresponse/b1']
+        self.command_topic = loadconfig.load_config()['topic']['fromawsiot/b1']
+        self.response_topic = loadconfig.load_config()['topic']['statusresponse/b1']
+        self.request_topic = loadconfig.load_config()['topic']['statusrequest/b1']
         self.BROKER_IP = os.getenv("BROKER_IP")
         self.BROKER_PORT = os.getenv("BROKER_PORT")
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
             print("connection established, returned code=", rc)
-            client.subscribe(self.topic_1)
-            client.subscribe(self.topic_2)
+            client.subscribe(self.command_topic)
+            client.subscribe(self.request_topic)
         else:
             print("connection error, returned code=", rc)
 
@@ -28,14 +29,13 @@ class Subscriber:
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
         if msg.topic == "status_request/b1":
             payload = {"message": "On"}
-            client.publish(self.topic_2, json.dumps(payload))
+            client.publish(self.response_topic, json.dumps(payload))
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
 
     def subscribe(self):
         broker_address = self.BROKER_IP
-        print(broker_address)
         # initialise MQTT Client
         client = mqtt.Client("pi-subscriber")
 
