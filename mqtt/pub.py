@@ -4,7 +4,6 @@ import logging
 import os
 import utility
 from dotenv import load_dotenv
-load_dotenv()
 env_path = './.env'
 load_dotenv(dotenv_path=env_path)
 
@@ -39,6 +38,8 @@ class Publisher:
         print("client disconnected OK")
 
     def publish(self, pub, payload):
+        print(self.broker_address)
+        print(self.port)
         if pub == 'arduino':
             # setting topic to publish to
             topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']
