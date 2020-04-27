@@ -1,20 +1,20 @@
 # import serial
 from mqtt.pub import Publisher
-
+import serial
+import json
 # Established arduino connection
-# ser = serial.Serial('/dev/ttyACM0', 9600)
-# s = [0]
+ser = serial.Serial('/dev/ttyACM0', baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
+s = [0]
 
 
 def push_data():
-    testpayload={'sensor-device': 'arduino-id',
-    'time': '20-18-04T11:24:36Z',
-    'data': {
-        'temp': '30',
-        'humidity': '30',
-        'water': '330',
-        'ph': '7',
-        'ldr': '485',
-    }}
-    publisher = Publisher()
-    publisher.publish('arduino', testpayload)
+    ser.flush()
+    s[0] = ser.readline().decode().strip()
+    payload = s[0]
+    print(payload)
+    try:
+        publisher = Publisher()
+        publisher.publish('arduino', payload)
+    except Exception as e: 
+        print('Decoding JSON has failed')
+        print(e)
