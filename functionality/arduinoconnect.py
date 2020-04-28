@@ -10,8 +10,8 @@ s = [0]
 def push_data():
     ser.flush()
     s[0] = ser.readline().decode().strip()
-    payload = s[0]
-    print(payload)
+    payload = s[0].replace('"', "'")
+    print(str(payload))
     try:
         publisher = Publisher()
         publisher.publish('arduino', payload)

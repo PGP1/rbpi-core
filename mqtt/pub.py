@@ -35,15 +35,14 @@ class Publisher:
         print("client disconnected OK")
 
     def publish(self, pub, arduinopayload):
-        print(self.broker_address)
-        print(self.port)
+        print("Sending to: ", self.broker_address)
+        print("on: ", self.port)
         if pub == 'arduino':
             # setting topic to publish to
             topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']
             id = utility.iddevice.get_id()
             now_time = datetime.datetime.now().isoformat()
-            payload = {"broker-device": id, "payload": '{"time": %s, %s}' %(now_time, arduinopayload) }
-            print(payload)
+            payloadJSON = {'broker-device': id, 'payload': "{'time': %s, %s}" %(now_time, arduinopayload)}
             # create new instance
             client = mqtt.Client("awsiot-client")
             client.on_publish = self.on_publish
@@ -52,9 +51,9 @@ class Publisher:
             # set broker address of raspberry pis
             # connect to pi
             client.connect(self.broker_address, self.port)
-            print(self.port)
-            # Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
-            client.publish(topic, json.dumps(payload))
+            
+            #Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
+            client.publish(topic, json.dumps(json.loads(json.dumps(payloadStr))))
             client.disconnect()
         elif pub == 'status':
             # Publish back to the AWSIoT to respond for request for online
