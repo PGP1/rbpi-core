@@ -40,13 +40,18 @@ class Publisher:
         if pub == 'arduino':
             # setting topic to publish to
             topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']
-            id = utility.iddevice.get_id()
+            brokerID= utility.iddevice.get_id()
             now_time = datetime.datetime.now().isoformat()
-            payloadJSON = {}
-            payloadJSON['broker-device'] = id
-            payloadJSON['payload']['time'] = now_time
-            payloadJSON['payload'] = arduinopayload
-            print(payloadJSON)
+            
+            publishJSON = {}
+            payload = {}
+            
+            publishJSON['broker-device'] = brokerID
+            payload['time'] = now_time
+            data = arduinopayload
+            payload['data'] = data
+            publishJSON['payload'] = payload
+
             # create new instance
             client = mqtt.Client("awsiot-client")
             client.on_publish = self.on_publish
@@ -57,7 +62,7 @@ class Publisher:
             client.connect(self.broker_address, self.port)
             
             #Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
-            client.publish(topic, json.dumps(json.loads(json.dumps(payloadStr))))
+            client.publish(topic, json.dumps(publishJSON))
             client.disconnect()
         elif pub == 'status':
             # Publish back to the AWSIoT to respond for request for online

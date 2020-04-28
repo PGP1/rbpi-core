@@ -8,13 +8,13 @@ s = [0]
 
 
 def push_data():
-    ser.flush()
-    s[0] = ser.readline().decode().strip()
-    payload = s[0].replace('"', "'")
-    print(str(payload))
     try:
+        ser.flush()
+        s[0] = ser.readline().decode().strip()
+        payload = s[0]
+        payloadJSON = json.loads(payload)
         publisher = Publisher()
-        publisher.publish('arduino', payload)
+        publisher.publish('arduino', payloadJSON['data'])
     except Exception as e: 
         print('Decoding JSON has failed')
         print(e)
