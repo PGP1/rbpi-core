@@ -42,7 +42,11 @@ class Publisher:
             topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']
             id = utility.iddevice.get_id()
             now_time = datetime.datetime.now().isoformat()
-            payloadJSON = {'broker-device': id, 'payload': "{'time': %s, %s}" %(now_time, arduinopayload)}
+            payloadJSON = {}
+            payloadJSON['broker-device'] = id
+            payloadJSON['payload']['time'] = now_time
+            payloadJSON['payload'] = arduinopayload
+            print(payloadJSON)
             # create new instance
             client = mqtt.Client("awsiot-client")
             client.on_publish = self.on_publish
