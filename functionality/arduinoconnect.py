@@ -16,5 +16,5 @@ def push_data():
         publisher = Publisher()
         publisher.publish('arduino', payloadJSON['data'])
     except Exception as e: 
-        print('Decoding JSON has failed')
-        print(e)
+        print('[Error] Decoding JSON has failed')
+        print('[Error]', e)
