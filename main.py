@@ -1,5 +1,4 @@
 import functionality.arduinoconnect as arduino
-from mqtt.sub import Subscriber
 '''
 Calls Arduino Connect, and then push data to cloud, but publishing
 '''
