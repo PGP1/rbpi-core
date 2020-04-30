@@ -3,10 +3,12 @@ import paho.mqtt.client as mqtt
 import json
 import os
 import utility.loadconfig as loadconfig
+import serial
 from dotenv import load_dotenv
 env_path = './.env'
 load_dotenv(dotenv_path=env_path)
 
+ser = serial.Serial('/dev/ttyACM0', baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
 
 class Subscriber:
 
@@ -30,6 +32,10 @@ class Subscriber:
         if msg.topic == "status_request/b1":
             payload = {"message": "On"}
             client.publish(self.response_topic, json.dumps(payload))
+        else:
+            print(type(msg.payload))
+            ser.write(msg.payload)
+            print("[Serial] sent commands to arduino | payload {}".format(msg.payload))
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
