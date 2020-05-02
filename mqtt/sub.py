@@ -3,6 +3,9 @@ import paho.mqtt.client as mqtt
 import json
 import os
 import utility.loadconfig as loadconfig
+import utility.statusdevice as statusdevice
+import utility.iddevice as iddevice
+import utility.resetdevice as resetdevice
 import serial
 from dotenv import load_dotenv
 env_path = './.env'
@@ -13,26 +16,36 @@ ser = serial.Serial('/dev/ttyACM0', baudrate=9600, parity=serial.PARITY_NONE, st
 class Subscriber:
 
     def __init__(self):
-        self.topic_1 = loadconfig.load_config()['topic']['fromawsiot/b1']
-        self.topic_2 = loadconfig.load_config()['topic']['statusresponse/b1']
+        self.command_topic = loadconfig.load_config()['topic']['fromawsiot/b1']
+        self.response_topic = loadconfig.load_config()['topic']['statusresponse/b1']
+        self.request_topic = loadconfig.load_config()['topic']['statusrequest/b1']
         self.BROKER_IP = os.getenv("BROKER_IP")
         self.BROKER_PORT = os.getenv("BROKER_PORT")
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
             print("connection established, returned code=", rc)
-            client.subscribe(self.topic_1)
-            client.subscribe(self.topic_2)
+            client.subscribe(self.command_topic)
+            client.subscribe(self.request_topic)
         else:
             print("connection error, returned code=", rc)
 
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
+        payloadJSON = json.loads(msg.payload)
+        
         if msg.topic == "status_request/b1":
-            payload = {"message": "On"}
-            client.publish(self.topic_2, json.dumps(payload))
-        else:
-            print(type(msg.payload))
+            payload = {}
+            payload['broker-id'] = iddevice.get_id()
+            payload['type'] = 'resources'
+            payload['status'] = 'On'
+            payload['uptime'] = statusdevice.get_uptime()
+            payload['cpu-percent'] = statusdevice.get_cpu_percent()
+            payload['ram'] = statusdevice.get_ram_usage()
+            client.publish(self.response_topic, json.dumps(payload))
+        elif payloadJSON['controller']['type'] == 'raspberrypi':
+            resetdevice.reset_device()
+        elif payloadJSON['controller']['type'] == 'arduino':
             ser.write(msg.payload)
             print("[Serial] sent commands to arduino | payload {}".format(msg.payload))
 
@@ -41,7 +54,6 @@ class Subscriber:
 
     def subscribe(self):
         broker_address = self.BROKER_IP
-        print(broker_address)
         # initialise MQTT Client
         client = mqtt.Client("pi-subscriber")
 

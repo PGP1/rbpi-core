@@ -26,17 +26,17 @@ class Publisher:
         self.port = int(BROKER_PORT)
 
     def on_publish(self, client, userdata, result):
-        print("data published \n")
+        print("[Publish] data published \n")
         pass
 
     def on_disconnect(self, client, userdata, rc):
         logging.debug("disconnected, rc=", str(rc))
         client.loop_stop()
-        print("client disconnected OK")
+        print("[Publish] client disconnected OK")
 
     def publish(self, pub, arduinopayload):
-        print("Sending to: ", self.broker_address)
-        print("on: ", self.port)
+        print("[Publish] Sending to: ", self.broker_address)
+        print("[Publish] on: ", self.port)
         if pub == 'arduino':
             # setting topic to publish to
             topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']

@@ -13,8 +13,9 @@ def push_data():
         s[0] = ser.readline().decode().strip()
         payload = s[0]
         payloadJSON = json.loads(payload)
+        print("[Serial] recieving data from Arduino | payload {}".format(payload))
         publisher = Publisher()
         publisher.publish('arduino', payloadJSON['data'])
     except Exception as e: 
-        print('Decoding JSON has failed')
-        print(e)
+        print('[Error] Decoding JSON has failed')
+        print('[Error]', e)
