@@ -3,6 +3,9 @@ import paho.mqtt.client as mqtt
 import json
 import os
 import utility.loadconfig as loadconfig
+import utility.statusdevice as statusdevice
+import utility.iddevice as iddevice
+import utility.resetdevice as resetdevice
 import serial
 from dotenv import load_dotenv
 env_path = './.env'
@@ -29,11 +32,20 @@ class Subscriber:
 
     def on_message(self, client, userdata, msg):
         print("topic: {} | payload: {} ".format(msg.topic, msg.payload))
+        payloadJSON = json.loads(msg.payload)
+        
         if msg.topic == "status_request/b1":
-            payload = {"message": "On"}
+            payload = {}
+            payload['broker-id'] = iddevice.get_id()
+            payload['type'] = 'resources'
+            payload['status'] = 'On'
+            payload['uptime'] = statusdevice.get_uptime()
+            payload['cpu-percent'] = statusdevice.get_cpu_percent()
+            payload['ram'] = statusdevice.get_ram_usage()
             client.publish(self.response_topic, json.dumps(payload))
-        else:
-            print(type(msg.payload))
+        elif payloadJSON['controller']['type'] == 'raspberrypi':
+            resetdevice.reset_device()
+        elif payloadJSON['controller']['type'] == 'arduino':
             ser.write(msg.payload)
             print("[Serial] sent commands to arduino | payload {}".format(msg.payload))
 
