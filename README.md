@@ -46,7 +46,7 @@ aws iot create-policy --policy-name bridge --policy-document '{"Version": "2012-
 cd /etc/mosquitto/certs/
 ```
 ```
-sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key --region ap-south-east
+sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key --region ap-southeast-2
 ```
 
 #### List the certificate and copy the ARN 
