@@ -32,7 +32,7 @@ sudo apt-get install mosquitto && sudo apt-get instal mosquitto-clients
 #### Configure the CLI with your region, leave access/private keys blank
 
 ``` 
-sudo aws configure
+aws configure
 ```
 
 ##### Create an IAM policy for the bridge
@@ -63,6 +63,7 @@ aws iot attach-principal-policy --policy-name bridge --principal <arn>
 #### Add read permissions to private key and client cert
 ```sudo chmod 644 private.key
 sudo chmod 644 cert.crt
+sudo chmod 644 private.key
 ```
 
 #### Create your rootCA.pem  
