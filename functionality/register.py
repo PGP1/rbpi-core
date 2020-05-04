@@ -31,17 +31,28 @@ def register():
 
     def on_publish(client, userdata, result):
         print("registered device \n")
+        print(payload)
         pass
+    
+    def on_connect(client, userdata, flags, rc):
+        if rc == 0:
+            print("connection established, returned code=", rc)
+        else:
+            print("connection error, returned code=", rc)
+
+    def on_log(client, userdata, level, buf):
+        print("log ", buf)
 
     def on_disconnect(client, userdata, rc):
         logging.debug("disconnected, rc=", str(rc))
         client.loop_stop()
-        print("client disconnected OK")
 
     # Create new instance
     client = mqtt.Client("awsiot-client")
     client.on_publish = on_publish
+    client.on_connect = on_connect
     client.on_disconnect = on_disconnect
+    client.on_log = on_log
 
     # set broker address of raspberry pis
     # connect to pi
