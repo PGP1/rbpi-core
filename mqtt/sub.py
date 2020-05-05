@@ -7,11 +7,12 @@ import utility.statusdevice as statusdevice
 import utility.iddevice as iddevice
 import utility.resetdevice as resetdevice
 import serial
+import datetime
 from dotenv import load_dotenv
 env_path = './.env'
 load_dotenv(dotenv_path=env_path)
 
-ser = serial.Serial('/dev/ttyACM0', baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
+ser = serial.Serial('/dev/ttyACM0', baudrate=115200, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_TWO, bytesize=serial.EIGHTBITS)
 
 class Subscriber:
 
@@ -38,16 +39,18 @@ class Subscriber:
             payload = {}
             payload['broker-id'] = iddevice.get_id()
             payload['type'] = 'resources'
+            payload['time'] = datetime.datetime.now().isoformat()
             payload['status'] = 'On'
             payload['uptime'] = statusdevice.get_uptime()
             payload['cpu-percent'] = statusdevice.get_cpu_percent()
             payload['ram'] = statusdevice.get_ram_usage()
             client.publish(self.response_topic, json.dumps(payload))
+            print(json.dumps(payload))
         elif payloadJSON['controller']['type'] == 'raspberrypi':
             resetdevice.reset_device()
         elif payloadJSON['controller']['type'] == 'arduino':
             ser.write(msg.payload)
-            print("[Serial] sent commands to arduino | payload {}".format(msg.payload))
+            print("[Serial] sent commands to arduino | payload {} of type {}".format(msg.payload, type(msg.payload)))
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)

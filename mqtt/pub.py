@@ -41,8 +41,8 @@ class Publisher:
             # setting topic to publish to
             topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']
             brokerID= utility.iddevice.get_id()
-            now_time = datetime.datetime.now().isoformat()
-            
+            now_time = datetime.datetime.now().now().isoformat()
+
             publishJSON = {}
             payload = {}
             
@@ -61,6 +61,7 @@ class Publisher:
             # connect to pi
             client.connect(self.broker_address, self.port)
             
+            print(publishJSON)
             #Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
             client.publish(topic, json.dumps(publishJSON))
             client.disconnect()

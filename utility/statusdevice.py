@@ -8,9 +8,8 @@ def get_uptime():
 
 def get_cpu_percent():
     cpupercent = 0
-    for i in range(0, 5):
-        cpupercent = psutil.cpu_percent(interval=3, percpu=False)
-        print("CPU Usage: {}%".format(cpupercent))
+    cpupercent = psutil.cpu_percent(interval=3, percpu=False)
+    print("CPU Usage: {}%".format(cpupercent))
     return cpupercent
 
 def get_avg_cpu_load():
