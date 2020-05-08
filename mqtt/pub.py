@@ -46,12 +46,10 @@ class Publisher:
             print(arduinopayload)
             publishJSON = {}
             payload = {}
-            
+            publishJSON['broker-device'] = brokerID
             data = arduinopayload["data"]
             payload['data'] = data
             publishJSON['payload'] = payload
-            
-            publishJSON['broker-device'] = brokerID
             payload['time'] = now_time
             # create new instance
             client = mqtt.Client("awsiot-client")
