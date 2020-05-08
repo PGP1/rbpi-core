@@ -36,6 +36,7 @@ def register():
     
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
+            print("[DEBUG] ", broker_address)
             print("connection established, returned code=", rc)
         else:
             print("connection error, returned code=", rc)
@@ -56,6 +57,7 @@ def register():
 
     # set broker address of raspberry pis
     # connect to pi
+    print(broker_address)
     client.connect(broker_address, port)
 
     # publish to topic for AWS IoT to pickup

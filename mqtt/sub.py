@@ -12,8 +12,6 @@ from dotenv import load_dotenv
 env_path = './.env'
 load_dotenv(dotenv_path=env_path)
 
-ser = serial.Serial('/dev/ttyACM0', baudrate=115200, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_TWO, bytesize=serial.EIGHTBITS)
-
 class Subscriber:
 
     def __init__(self):
@@ -49,8 +47,7 @@ class Subscriber:
         elif payloadJSON['controller']['type'] == 'raspberrypi':
             resetdevice.reset_device()
         elif payloadJSON['controller']['type'] == 'arduino':
-            ser.write(msg.payload)
-            print("[Serial] sent commands to arduino | payload {} of type {}".format(msg.payload, type(msg.payload)))
+            print("[Mock] sent commands to arduino | payload {} of type {}".format(msg.payload, type(msg.payload)))
 
     def on_log(self, client, userdata, level, buf):
         print("log ", buf)
