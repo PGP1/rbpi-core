@@ -75,7 +75,7 @@ class Publisher:
             client.connect(self.broker_address, self.port)
 
             topic = loadconfig.load_config()['topic']['toawsiot/b1']
-            id = iddevice.get_id()
+            id = utility.iddevice.get_id()
             payload = {'broker-device': id, 'payload': 'On'}
             client.publish(topic, json.dumps(payload))
             client.disconnect()
