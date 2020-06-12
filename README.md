@@ -79,7 +79,7 @@ Basic Data capturing using Sense Hat.
 
 - Each raspberry pi will have an unique id.
 - On first run:
-	- Hash token is saved in local sqlite3 under rbpi-rmit-iot.db
+	- Hash token is saved in local sqlite3 under *.db
 	- New folder data is created
 - Data files are saved as format: ID-day-month-year-hour-min-sec.csv
 
@@ -178,7 +178,7 @@ To find your AWS endpoint, enter aws iot describe-endpoint
 > 
 > # AWS IoT endpoint, use AWS CLI 'aws iot describe-endpoint'
 > connection awsiot
-> address XXXXXXXXXX.iot.eu-central-1.amazonaws.com:8883
+> address XXXXXXXXXX.iot.<region>.amazonaws.com:8883
 > 
 > # Specifying which topics are bridged
 > topic awsiot_to_localgateway in 1
