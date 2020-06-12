@@ -1,17 +1,19 @@
 # RBPI-Core (Plantly)
 Tests, configs and setup instructions for our Raspberry Pi - Arduino IoT Smart Garden: Plantly.
 
-## 1 Pre-Requistites
+Data capturing using Arduino Microcontroller
+
+- Each raspberry pi will have an unique id.
+- On first run:
+	- Hash token is saved
+	- New folder data is created
+- Data files are saved as format: ID-day-month-year-hour-min-sec.csv
+
+## 1 Prerequisite
 
 - Python3 Latest Version
-- Mosquitto MQTT Protocol Library
-
-### Dependencies:
-
-Raspian
-```
-sudo apt install mosquitto
-```
+- Mosquitto MQTT Protocol Library (paho-mqtt, and core mosquitto library)
+- Raspberry Pi Device (we are using RPI 3)
 
 requirements.txt
 - paho-mqtt
@@ -19,52 +21,77 @@ requirements.txt
 - python-dotenv
 - pyserial
 
+### 1.1 Dependencies: 
 
-
-### Setting up Virtual Environment
+#### Set up Virtual Environment
 Install virtualenv, and create a virtual environment to install dependencies
-```
+``` bash
 pip3 install virtualenv
 
 virtualenv venv
 ```
 
 Activate the venv (virtual env called venv)
-```
+``` bash
 source venv/bin/activate
 ```
 
 Install dependencies
-```
+``` bash
 pip3 install -r requirements.txt
 ```
 
-To run the sensor pushing from garden
-
+Running on RaspianOS (Install MQTT)
+``` bash
+sudo apt install mosquitto
 ```
+
+
+### 1.2 Setting up the Device for Videostreaming, pushing sensor data & listening for dashboard commands
+
+Make sure its executable, if its not then run
+```bash
+chmod +x <scriptname>.sh
+```
+
+#### Setting up MQTT on the Raspberry Pi
+
+Refer to **4.1 How to run bridge MQTT Broker to AWS IoT** to link the device to IoT Core and establish PUB/SUB communication with Cloud Architecture
+
+#### Setting up Garden Sensor collection
+
+Ensure that the Arduino is connected via serial cable, refer to Arduino repo for instructions to deploy controller_main.ino sketch
+
+
+
+## 2 Deployment
+> Pre-req: Arduino must be connected via serial cable, and the .ino file (sensor code) deployed
+
+To push data collected from sensor
+``` bash
 python3 main.py
 ```
+> Open up another terminal tab WHY: This method is for DEBUG to see the logs 
 
 To run subscriber to receieve commands from Dashboard
-
-```
+``` bash
 python3 startup.py
 ```
 
 ### Setting up your Videostream
-INIT TODO
-## 2 Deployment
-INIT TODO
+
+> Open up another terminal tab
+
+Add your relevant credentials, into this script and run
+``` bash
+./docker.sh
+```
+
+Now the device is ready to receive commands from the dashboard, to push collected data from sensors & videostreaming is running.
+
 ## 3 Testing
-INIT TODO
 
-Basic Data capturing using Sense Hat.
 
-- Each raspberry pi will have an unique id.
-- On first run:
-	- Hash token is saved in local sqlite3 under *.db
-	- New folder data is created
-- Data files are saved as format: ID-day-month-year-hour-min-sec.csv
 
 
 
@@ -91,44 +118,43 @@ sudo apt-get install mosquitto && sudo apt-get instal mosquitto-clients
 
 #### Configure the CLI with your region, leave access/private keys blank
 
-``` 
+``` bash
 aws configure
 ```
 
-##### Create an IAM policy for the bridge
+#### Create an IAM policy for the bridge
 ```
 aws iot create-policy --policy-name bridge --policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Action": "iot:*","Resource": "*"}]}'
 ```
 
 
-###### Place yourself in Mosquitto directory and create certificates and keys, note the certificate ARN
-``` 
+#### Place yourself in Mosquitto directory and create certificates and keys, note the certificate ARN
+``` bash
 cd /etc/mosquitto/certs/
 ```
-```
+``` bash
 sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key --region ap-southeast-2
 ```
 
 #### List the certificate and copy the ARN 
-```
+``` bash
 aws iot list-certificates
 ```
 
 #### Attach the policy to your certificate
-
-``` 
+``` bash
 aws iot attach-principal-policy --policy-name bridge --principal <arn>
 ```
 
 #### Add read permissions to private key and client cert
-```sudo chmod 644 private.key
+``` bash
+sudo chmod 644 private.key
 sudo chmod 644 cert.crt
 sudo chmod 644 private.key
 ```
 
 #### Create your rootCA.pem  
-
-```
+``` bash
 sudo touch rootCA.pem
 ```
 
@@ -146,7 +172,7 @@ Save as rootCA.pem in the same directory as above certificated
 
 #### Create the configuration file
 
-```
+``` bash
 #Create the configuration file
 sudo nano /etc/mosquitto/conf.d/bridge.conf
 ```
@@ -198,20 +224,21 @@ To find your AWS endpoint, enter aws iot describe-endpoint
 
 
 Starts Mosquitto in the background
-```
+``` bash
 sudo mosquitto -c /etc/mosquitto/conf.d/bridge.conf –d
 ```
+
 Starts Mosquitto with logs (use for DEBUG)
-```
+``` bash
 sudo mosquitto -c /etc/mosquitto/conf.d/bridge.conf
 ```
+
 Enable Mosquitto to run at startup automatically
-```
+``` bash
 sudo chkconfig --level 345 scriptname on
 ```
 
 Test by publishing to the topic, going into AWS IoT > Test and subcribing to 'localgate_to_awsiot'
-``` 
+``` bash
 mosquitto_pub -h localhost -p 1883 -q 1 -d -t localgateway_to_awsiot  -i clientid1 -m "{\"key\": \"helloFromLocalGateway\"}"
-
 ```
