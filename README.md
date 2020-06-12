@@ -65,6 +65,7 @@ Ensure that the Arduino is connected via serial cable, refer to Arduino repo for
 
 
 ## 2 Deployment
+### 2.1 Deploying MQTT PUB/SUB Communication 
 > Pre-req: Arduino must be connected via serial cable, and the .ino file (sensor code) deployed
 
 To push data collected from sensor
@@ -78,7 +79,7 @@ To run subscriber to receieve commands from Dashboard
 python3 startup.py
 ```
 
-### Setting up your Videostream
+### 2.2 Deploying up your Videostream
 
 > Open up another terminal tab
 
