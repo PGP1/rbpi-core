@@ -54,26 +54,9 @@ python3 startup.py
 ### Setting up your Videostream
 INIT TODO
 ## 2 Deployment
-
-2.1 Define your domain
-
-
-
-2.2 Configure your cluster
-
-
-
-
-2.3 Set up access via Cognito (will be used by Lambda functions)
-
-
+INIT TODO
 ## 3 Testing
-
-3.1 Send some test data to the new cluster
-
-
-3.2 Then install pre-reqs for the testing script
-
+INIT TODO
 
 Basic Data capturing using Sense Hat.
 
