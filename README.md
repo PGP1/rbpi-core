@@ -57,7 +57,14 @@ Ensure that your credentials are assigned to environment variables
 - Default Region
 * NEVER HARDCODE YOUR CREDENTIALS, utilise $ENVIRONMENTVARIABLE
 
-Make sure its executable, if its not then run
+You can do this by:
+``` bash
+export AWS_ACCESS_KEY=XXXXXXX
+export AWS_SECRET_ACCESS_KEY=XXXXXXX
+export AWS_DEFAULT_REGION=XXXXXXX
+```
+
+Make sure docker-videostream.sh executable, if its not then run
 ```bash
 chmod +x <scriptname>.sh
 ```
@@ -106,7 +113,7 @@ python3 startup.py
 
 *check your environment variables are set for your credentials
 ``` bash
-./docker.sh
+./docker-videostream.sh
 ```
 
 Now the device is ready to receive commands from the dashboard, to push collected data from sensors & videostreaming is running.
@@ -117,8 +124,6 @@ To run the tests, run this command:
 ``` bash
 pytest
 ```
-
-
 
 ## 4 Additional Setup 
 
