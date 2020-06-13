@@ -149,5 +149,3 @@ Test by publishing to the topic, going into AWS IoT > Test and subcribing to 'lo
 mosquitto_pub -h localhost -p 1883 -q 1 -d -t localgateway_to_awsiot  -i clientid1 -m "{\"key\": \"helloFromLocalGateway\"}"
 
 ```
-
-
