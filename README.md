@@ -11,8 +11,9 @@ Data capturing using Arduino Microcontroller
 
 ## 1 Prerequisite
 
-- Python3 Latest Version
-- Mosquitto MQTT Protocol Library (paho-mqtt, and core mosquitto library)
+- Python3 3.7.3+
+- Mosquitto 1.5.7 MQTT Protocol Library
+- Python Library for Paho-MQTT
 - Raspberry Pi Device (we are using RPI 3)
 
 requirements.txt
@@ -49,6 +50,12 @@ sudo apt install mosquitto
 
 ### 1.2 Setting up the Device for Videostreaming, pushing sensor data & listening for dashboard commands
 
+Ensure that your credentials are assigned to environment variables
+- Access Key
+- Secret Key
+- Default Region
+* NEVER HARDCODE YOUR CREDENTIALS, utilise $ENVIRONMENTVARIABLE
+
 Make sure its executable, if its not then run
 ```bash
 chmod +x <scriptname>.sh
@@ -60,8 +67,7 @@ Refer to **4.1 How to run bridge MQTT Broker to AWS IoT** to link the device to 
 
 #### Setting up Garden Sensor collection
 
-Ensure that the Arduino is connected via serial cable, refer to Arduino repo for instructions to deploy controller_main.ino sketch
-
+Ensure that the Arduino is connected via serial cable, refer to **Arduino repo** for instructions to deploy controller_main.ino sketch
 
 
 ## 2 Deployment
@@ -83,7 +89,7 @@ python3 startup.py
 
 > Open up another terminal tab
 
-Add your relevant credentials, into this script and run
+*check your environment variables are set for your credentials
 ``` bash
 ./docker.sh
 ```
@@ -169,7 +175,7 @@ sudo touch rootCA.pem
  -----END CERTIFICATE-----
 ```
 
-Save as rootCA.pem in the same directory as above certificated
+Save as rootCA.pem in the same directory as above certificated. You can also create your own CA, please refer to online documentation to IoT Core Credentials. 
 
 #### Create the configuration file
 
