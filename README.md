@@ -21,6 +21,7 @@ requirements.txt
 - psutil
 - python-dotenv
 - pyserial
+- pytest
 
 ### 1.1 Dependencies: 
 
@@ -112,7 +113,10 @@ Now the device is ready to receive commands from the dashboard, to push collecte
 
 ## 3 Testing
 
-
+To run the tests, run this command:
+``` bash
+pytest
+```
 
 
 
