@@ -63,8 +63,22 @@ chmod +x <scriptname>.sh
 
 #### Setting up MQTT on the Raspberry Pi
 
-Refer to **4.1 How to run bridge MQTT Broker to AWS IoT** to link the device to IoT Core and establish PUB/SUB communication with Cloud Architecture
+- Refer to **4.1 How to run bridge MQTT Broker to AWS IoT** to link the device to IoT Core and establish PUB/SUB communication with Cloud Architecture
 
+- Remember to set a .env file
+
+``` bash 
+touch .env
+
+vim .env
+```
+
+Copy 
+
+``` bash
+BROKER_IP=localhost
+BROKER_PORT=1883
+```
 #### Setting up Garden Sensor collection
 
 Ensure that the Arduino is connected via serial cable, refer to **Arduino repo** for instructions to deploy controller_main.ino sketch
