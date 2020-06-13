@@ -1,7 +1,6 @@
 """
 testing if mqtt protocol sends data properly
 """
-from mqtt.pub import Publisher
 import serial
 import json
 
