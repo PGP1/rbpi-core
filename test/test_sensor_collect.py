@@ -1,0 +1,69 @@
+"""
+testing if mqtt protocol sends data properly
+"""
+from mqtt.pub import Publisher
+import serial
+import json
+
+# Established arduino connection
+ser = serial.Serial('/dev/ttyACM0', baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
+s = [0]
+
+import paho.mqtt.client as mqtt
+import time
+import json
+
+LOCALHOST = "localhost"
+
+def test_sensor_collect():
+    try:
+        ser.flush()
+        s[0] = ser.readline().decode().strip()
+        payload = s[0]
+        payloadJSON = json.loads(payload)
+        print("[Serial] recieving data from Arduino | payload {}".format(payload))
+        test_mqtt('test_sensor_collect', payloadJSON)
+        # publisher = Publisher()
+        # publisher.publish('arduino', payloadJSON['data'])
+    except Exception as e: 
+        print('[Error] Decoding JSON has failed')
+        print('[Error]', e)
+
+# Init client
+client = mqtt.Client("Test")
+
+# Functions to bind subscriber client.
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connected to ", LOCALHOST)
+    else:
+        print("Bad connection")
+
+def on_message(client, userdata, msg):
+    """
+    Decode the payload and store it.
+    """
+    payload = msg.payload
+    m_decode = msg.payload.decode("utf-8", "ignore")
+    print("Payload received from {} topic: {}" \
+        .format(msg.topic, str(m_decode)))
+    if msg.topic == 'test_sensor_collect':
+        HELLO_RESP = str(m_decode)
+        assert payload == HELLO_RESP
+
+def on_disconnect(client, userdata, flags, rc=0):
+    print("Disconnected")
+
+def test_mqtt(topic, payload):
+    # Binds functions
+    client.on_connect = on_connect
+    client.on_message = on_message
+
+    client.connect(LOCALHOST) # Connect to broker
+    client.loop_start() # Start loop
+
+    client.subscribe(topic)
+    client.publish(topic, payload)
+
+    client.loop_stop() # Stop loop
+    client.disconnect() # disconnect    
