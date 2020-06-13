@@ -123,7 +123,7 @@ Make sure you install Mosquitto onto the Pi
 sudo apt-get install mosquitto && sudo apt-get instal mosquitto-clients
 ```
 
-#### Configure the CLI with your region, leave access/private keys blank
+#### Configure the CLI with your region, enter in region/credentials
 
 ``` bash
 aws configure
@@ -140,7 +140,7 @@ aws iot create-policy --policy-name bridge --policy-document '{"Version": "2012-
 cd /etc/mosquitto/certs/
 ```
 ``` bash
-sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key --region ap-southeast-2
+sudo aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.crt --private-key-outfile private.key --public-key-outfile public.key --region <region>
 ```
 
 #### List the certificate and copy the ARN 
