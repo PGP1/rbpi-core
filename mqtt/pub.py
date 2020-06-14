@@ -1,3 +1,6 @@
+"""
+module that contains publish logic.
+"""
 import paho.mqtt.client as mqtt
 import json
 import jsonschema
@@ -14,30 +17,62 @@ BROKER_PORT = os.getenv("BROKER_PORT")
 
 schema = utility.loadconfig.load_config()['schema-raspberrypi']
 
-'''
-methods
-- connect()
-- disconnect()
-- subscribe()
-- publish ()
-'''
-
 
 class Publisher:
+    """
+    Class that contains publish logic. when given a payload and route
+    it will publish to the correct route.
+    """
+
     def __init__(self):
+        """
+        initialises routes that it will publish to, ip address of MP and port.
+        """
         self.broker_address = str(BROKER_IP)
         self.port = int(BROKER_PORT)
 
     def on_publish(self, client, userdata, result):
+        """
+        function to run on successful publish
+
+        :param client: the client instance for this callback
+        :type client: Client
+        :param userdata: the private user data as set in Client()
+        or user_data_set()
+        :type userdata: [type]
+        :param result: Data being published
+        :type result: String
+        """
         print("[Publish] data published \n")
         pass
 
     def on_disconnect(self, client, userdata, rc):
+        """
+        function to run on disconnect
+
+        :param client: the mqtt client
+        :type client: Client
+        :param userdata: the private user data as set in Client()
+            or user_data_set()
+        :type userdata: [type]
+        :param rc: disconnection result
+        :type rc: int
+        """
         logging.debug("disconnected, rc=", str(rc))
         client.loop_stop()
         print("[Publish] client disconnected OK")
 
     def publish(self, pub, arduinopayload):
+        """
+        initialises client and binds functions, publish received payload
+        to MP and disconnects.
+
+        :param arduinopayload: the item that's being sent,
+            will be converted into json.
+        :type json: any
+        :param pub: type of payload to publish, status & arduino
+        :type pub: string
+        """
         print("[Publish] Sending to: ", self.broker_address)
         print("[Publish] on: ", self.port)
         if pub == 'arduino':

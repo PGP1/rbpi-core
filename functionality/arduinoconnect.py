@@ -11,6 +11,7 @@ s = [0]
 
 schema = utility.loadconfig.load_config()['schema-arduino']
 
+
 def push_data():
     try:
         ser.flush()

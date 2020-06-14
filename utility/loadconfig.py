@@ -1,3 +1,6 @@
+"""
+module that contains configuration logic, related to MQTT & other misc
+"""
 import json
 
 

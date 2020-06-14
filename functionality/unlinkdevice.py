@@ -19,11 +19,33 @@ topic = "unlink_device"
 
 
 def on_publish(client, userdata, result):
+    """
+    Callback function, activates implementation once the client.publish is successful
+
+    :param client: the client instance for this callback
+    :type client: Client
+    :param userdata: the private user data as set in Client() or
+    user_data_set()
+    :type userdata: any
+    :param result: Data being published
+    :type result: String
+    """
     print("unliked device \n")
     pass
 
 
 def on_disconnect(client, userdata, rc):
+    """
+    Callback function, activates implementation to run on disconnect
+
+    :param client: the mqtt client
+    :type client: Client
+    :param userdata: the private user data as set in Client()
+        or user_data_set()
+    :type userdata: [type]
+    :param rc: disconnection result
+    :type rc: int
+    """
     logging.debug("disconnected, rc=", str(rc))
     client.loop_stop()
     print("client disconnected OK")

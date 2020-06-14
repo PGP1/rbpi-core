@@ -1,5 +1,10 @@
+'''
+Initiates a subscriber to listen for dashboard commands
+'''
 import mqtt.sub as subscriber
-import functionality.register as register 
+import functionality.register as register
+
+
 def start_up():
     
     # Will register itself, it hasn't already

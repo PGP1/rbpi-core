@@ -1,3 +1,6 @@
+"""
+module that contains Hash ID logic.
+"""
 import sqlite3
 import uuid
 
@@ -10,6 +13,9 @@ via the local database
 
 
 def get_id():
+    """
+    Function to generate an ID, or retreive a already generated ID
+    """
     conn = sqlite3.connect('./data/rbpi-rmit-iot.db')
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS info (id TEXT PRIMARY KEY)")

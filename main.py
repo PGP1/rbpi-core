@@ -1,7 +1,7 @@
+'''
+Calls Arduino Connect, pushes sensordata by retrieving sensor data from Arduino
+'''
 import functionality.arduinoconnect as arduino
-'''
-Calls Arduino Connect, and then push data to cloud, but publishing
-'''
 
 
 def main():
