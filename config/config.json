@@ -1,0 +1,102 @@
+{
+    "topic": {
+        "toawsiot/b1": "localgateway_to_awsiot/b1",
+        "fromawsiot/b1": "awsiot_to_localgateway/b1",
+        "register": "register_device",
+        "unlink": "unlink_device",
+        "statusrequest/b1": "status_request/b1",
+        "statusresponse/b1": "status_response/b1"
+    },
+    "schema-arduino" : {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "device": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "temp": {
+                "type": "number"
+              },
+              "humidity": {
+                "type": "integer"
+              },
+              "water": {
+                "type": "integer"
+              },
+              "ph": {
+                "type": "number"
+              },
+              "ldr": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "temp",
+              "humidity",
+              "water",
+              "ph",
+              "ldr"
+            ]
+          }
+        },
+        "required": [
+          "device",
+          "data"
+        ]
+      },
+    "schema-raspberrypi": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "broker-device": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "time": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "temp": {
+                    "type": "number"
+                  },
+                  "humidity": {
+                    "type": "integer"
+                  },
+                  "water": {
+                    "type": "integer"
+                  },
+                  "ph": {
+                    "type": "number"
+                  },
+                  "ldr": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "temp",
+                  "humidity",
+                  "water",
+                  "ph",
+                  "ldr"
+                ]
+              }
+            },
+            "required": [
+              "time",
+              "data"
+            ]
+          }
+        },
+        "required": [
+          "broker-device",
+          "payload"
+        ]
+      }
+}
