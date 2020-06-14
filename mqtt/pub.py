@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import json
+import jsonschema
 import logging
 import os
 import utility
@@ -10,6 +11,8 @@ load_dotenv(dotenv_path=env_path)
 
 BROKER_IP = os.getenv("BROKER_IP")
 BROKER_PORT = os.getenv("BROKER_PORT")
+
+schema = utility.loadconfig.load_config()['schema-raspberrypi']
 
 '''
 methods
@@ -40,12 +43,12 @@ class Publisher:
         if pub == 'arduino':
             # setting topic to publish to
             topic = utility.loadconfig.load_config()['topic']['toawsiot/b1']
-            brokerID= utility.iddevice.get_id()
+            brokerID = utility.iddevice.get_id()
             now_time = datetime.datetime.now().now().isoformat()
 
             publishJSON = {}
             payload = {}
-            
+
             publishJSON['broker-device'] = brokerID
             payload['time'] = now_time
             data = arduinopayload
@@ -56,15 +59,20 @@ class Publisher:
             client = mqtt.Client("awsiot-client")
             client.on_publish = self.on_publish
             client.on_disconnect = self.on_disconnect
-            
+
             # set broker address of raspberry pis
             # connect to pi
             client.connect(self.broker_address, self.port)
-            
+
             print(publishJSON)
-            #Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
-            client.publish(topic, json.dumps(publishJSON))
-            client.disconnect()
+            try:
+                jsonschema.validate(publishJSON, schema)
+                # Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
+                client.publish(topic, json.dumps(publishJSON))
+                client.disconnect()
+            except Exception as e:
+                print("[Error] Not valid json format")
+                print('[Error]', e)
         elif pub == 'status':
             # Publish back to the AWSIoT to respond for request for online
             # status
