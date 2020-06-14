@@ -9,59 +9,9 @@ import json
 import pytest, os
 import logging
 import jsonschema
+import utility
 
-schema = {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "properties": {
-    "broker-device": {
-      "type": "string"
-    },
-    "payload": {
-      "type": "object",
-      "properties": {
-        "time": {
-          "type": "string"
-        },
-        "data": {
-          "type": "object",
-          "properties": {
-            "temp": {
-              "type": "integer"
-            },
-            "humidity": {
-              "type": "integer"
-            },
-            "water": {
-              "type": "integer"
-            },
-            "ph": {
-              "type": "number"
-            },
-            "ldr": {
-              "type": "integer"
-            }
-          },
-          "required": [
-            "temp",
-            "humidity",
-            "water",
-            "ph",
-            "ldr"
-          ]
-        }
-      },
-      "required": [
-        "time",
-        "data"
-      ]
-    }
-  },
-  "required": [
-    "broker-device",
-    "payload"
-  ]
-}
+schema = utility.loadconfig.load_config()['schema-arduino']
 
 # Established arduino connection
 ser = serial.Serial('/dev/ttyACM0', baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
@@ -116,7 +66,7 @@ def on_message(client, userdata, msg):
         .format(msg.topic, str(m_decode)))
     if msg.topic == 'test_topic_sensor':
         HELLO_RESP = str(m_decode)
-        #assert payload == HELLO_RESP
+        assert payload == HELLO_RESP
         assert jsonschema.validate(payload, schema)
         
 
