@@ -8,54 +8,43 @@ ser = serial.Serial('/dev/ttyACM0', baudrate=9600, parity=serial.PARITY_NONE, st
 s = [0]
 
 schema = {
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "broker-device": {
+    "device": {
       "type": "string"
     },
-    "payload": {
+    "data": {
       "type": "object",
       "properties": {
-        "time": {
-          "type": "string"
+        "temp": {
+          "type": "number"
         },
-        "data": {
-          "type": "object",
-          "properties": {
-            "temp": {
-              "type": "integer"
-            },
-            "humidity": {
-              "type": "integer"
-            },
-            "water": {
-              "type": "integer"
-            },
-            "ph": {
-              "type": "number"
-            },
-            "ldr": {
-              "type": "integer"
-            }
-          },
-          "required": [
-            "temp",
-            "humidity",
-            "water",
-            "ph",
-            "ldr"
-          ]
+        "humidity": {
+          "type": "integer"
+        },
+        "water": {
+          "type": "integer"
+        },
+        "ph": {
+          "type": "number"
+        },
+        "ldr": {
+          "type": "integer"
         }
       },
       "required": [
-        "time",
-        "data"
+        "temp",
+        "humidity",
+        "water",
+        "ph",
+        "ldr"
       ]
     }
   },
   "required": [
-    "broker-device",
-    "payload"
+    "device",
+    "data"
   ]
 }
 
