@@ -12,6 +12,8 @@ load_dotenv(dotenv_path=env_path)
 BROKER_IP = os.getenv("BROKER_IP")
 BROKER_PORT = os.getenv("BROKER_PORT")
 
+schema = utility.loadconfig.load_config()['schema-raspberrypi']
+
 '''
 methods
 - connect()
@@ -63,9 +65,14 @@ class Publisher:
             client.connect(self.broker_address, self.port)
 
             print(publishJSON)
-            # Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
-            client.publish(topic, json.dumps(publishJSON))
-            client.disconnect()
+            try:
+                jsonschema.validate(publishJSON, schema)
+                # Publish to topic 'localgateway_to_awsiot/b1' for AWS IoT to pickup
+                client.publish(topic, json.dumps(publishJSON))
+                client.disconnect()
+            except Exception as e:
+                print("[Error] Not valid json format")
+                print('[Error]', e)
         elif pub == 'status':
             # Publish back to the AWSIoT to respond for request for online
             # status
