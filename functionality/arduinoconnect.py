@@ -7,9 +7,7 @@ import jsonschema
 ser = serial.Serial('/dev/ttyACM0', baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS)
 s = [0]
 
-
 schema = {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
     "broker-device": {
@@ -58,7 +56,7 @@ schema = {
   "required": [
     "broker-device",
     "payload"
-    ]
+  ]
 }
 
 def push_data():
