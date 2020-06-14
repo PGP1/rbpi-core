@@ -56,7 +56,7 @@ def push_data():
         payloadJSON = json.loads(payload)
         print("[Serial] recieving data from Arduino | payload {}".format(payload))
         try: 
-            jsonschema.validate(payloadJSON, schema):
+            jsonschema.validate(payloadJSON, schema)
             publisher = Publisher()
             publisher.publish('arduino', payloadJSON['data'])
         except Exception as e:
