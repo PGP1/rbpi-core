@@ -21,7 +21,7 @@ def test_sensor_collect():
         payload = s[0]
         payloadJSON = json.loads(payload)
         print("[Serial] recieving data from Arduino | payload {}".format(payload))
-        test_mqtt('test_sensor_collect', payloadJSON)
+        test_mqtt(payloadJSON)
         # publisher = Publisher()
         # publisher.publish('arduino', payloadJSON['data'])
     except Exception as e: 
@@ -53,8 +53,9 @@ def on_message(client, userdata, msg):
 def on_disconnect(client, userdata, flags, rc=0):
     print("Disconnected")
 
-def test_mqtt(topic, payload):
+def test_mqtt():
     # Binds functions
+    topic = "test_topic"
     client.on_connect = on_connect
     client.on_message = on_message
 
