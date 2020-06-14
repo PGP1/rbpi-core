@@ -1,3 +1,6 @@
+"""
+module that contains status device logic
+"""
 import psutil
 import os
 
